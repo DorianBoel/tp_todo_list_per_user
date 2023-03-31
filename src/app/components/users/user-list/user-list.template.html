@@ -1,0 +1,30 @@
+<h1 class="is-size-3 has-text-centered mb-5">Liste des utilisateurs</h1>
+
+<table class="table is-fullwidth is-narrow is-striped">
+    <thead>
+        <tr>
+            <th>Photo de profil</th>
+            <th>Nom d'utilisateur</th>
+            <th>E-mail</th>
+            <th>Tâches en cours</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td class="is-flex is-justify-content-center">
+                <figure class="image is-48x48">
+                    <img class="is-rounded" [src]="getImg(user)" alt="Placeholder image">
+                </figure>
+            </td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>3</td>
+            <td>
+                <button class="button is-small is-inverted is-info">
+                    <a [routerLink]="'view/' + user.id!">Voir</a>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,21 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "MrMeu",
+            "email": "mr.meu@ilestgentil.au",
+            "imgUrl": "https://www.louispage.com/hs-fs/hubfs/emu.jpg?width=474&name=emu.jpg"
+        },
+        {
+            "id": 2,
+            "username": "aimé.kouyanski",
+            "email": "a.kouyanski@example.com"
+        },
+        {
+            "id": 3,
+            "username": "ARAKI",
+            "email": "araki@stando.com",
+            "imgUrl": "https://static.wikia.nocookie.net/ca83d96f-f71a-4d62-8b54-0fe2a4ac2527/scale-to-width/370"
+        }
+    ]
+}

@@ -1,4 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bulma/sass/utilities/initial-variables.sass";
 $navbar-breakpoint: $tablet;
+
+@import "../node_modules/bulma/sass/elements/table.sass";
+$table-cell-text-align: center;
+
 @import "../node_modules/bulma/bulma.sass";
+
+table {
+    border-collapse: separate;
+
+    &.table td {
+        @extend .has-text-centered;
+
+        vertical-align: middle;
+
+        button.button.is-inverted {
+            background-color: transparent;
+        }
+    }
+}
+
+figure.image img {
+    height: 100%;
+    object-fit: cover;
+}
