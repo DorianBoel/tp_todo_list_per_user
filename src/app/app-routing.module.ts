@@ -12,7 +12,11 @@ const routes: Routes = [
         loadChildren: () =>
             import("./components/users/users.module")
                 .then((mod) => mod.UsersModule),
-    }
+    },
+    {
+        path: "**",
+        redirectTo: "users",
+    },
 ];
 
 @NgModule({

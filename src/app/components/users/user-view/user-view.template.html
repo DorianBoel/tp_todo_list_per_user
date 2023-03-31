@@ -1,0 +1,77 @@
+<h1 *ngIf="user !== null" class="is-size-3 has-text-centered mb-5">Profil utilisateur de {{ user.username }}</h1>
+
+<div class="columns">
+    <div class="column" *ngIf="user !== null">
+        <div class="box">
+            <div class="columns is-mobile">
+                <div class="column is-narrow">
+                    <figure class="image is-128x128">
+                        <img class="is-rounded" [src]="getImg(user)" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="column is-flex is-flex-direction-column is-justify-content-center">
+                    <p class="is-size-4">{{ user.username }}</p>
+                    <p class="is-size-6">{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="block">
+            <span class="is-size-5 has-text-weight-bold">Liste des tâches</span>
+            <hr class="my-3">
+            <div class="card block has-background-info-light">
+                <header class="card-header is-active">
+                    <span class="card-header-title has-text-weight-semibold">En cours</span>
+                    <button class="card-header-icon">
+                        <span class="icon">
+                            <a class="is-active" href="#tasksToComplete" (click)="toggleCollapsible($event)" data-action="collapse">
+                                v
+                            </a>
+                        </span>
+                    </button>
+                </header>
+                <div id="tasksToComplete" class="is-collapsible is-active">
+                    <div class="card-content px-0 py-1">
+                        <table class="table is-fullwidth has-background-info-light">
+                            <tbody>
+                                <tr>
+                                    <td>BugFix n°34</td>
+                                    <td>Maintenance</td>
+                                    <td>
+                                        <button class="button button is-inverted is-info">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card has-background-success-light">
+                <header class="card-header">
+                    <span class="card-header-title has-text-weight-semibold">Terminées</span>
+                    <button class="card-header-icon">
+                        <a href="#tasksCompleted" (click)="toggleCollapsible($event)" data-action="collapse">
+                            v
+                        </a>
+                    </button>
+                </header>
+                <div id="tasksCompleted" class="is-collapsible">
+                    <div class="card-content px-0 py-1">
+                        <table class="table is-fullwidth has-background-success-light">
+                            <tbody>
+                                <tr>
+                                    <td>BugFix n°15</td>
+                                    <td>Maintenance</td>
+                                    <td>
+                                        <button class="button button is-inverted is-info">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

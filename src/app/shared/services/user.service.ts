@@ -29,4 +29,9 @@ export class UserService {
         return this.users$.subscribe(callback);
     }
 
+    findById(id: number) {
+        return this.http
+            .get<User>(`${this.baseUrl}/${id}`);
+    }
+
 }

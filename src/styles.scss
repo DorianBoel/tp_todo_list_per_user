@@ -6,17 +6,28 @@ $navbar-breakpoint: $tablet;
 $table-cell-text-align: center;
 
 @import "../node_modules/bulma/bulma.sass";
+@import '@creativebulma/bulma-collapsible';
+
+.card-footer {
+    border-top: none;
+}
 
 table {
     border-collapse: separate;
 
     &.table td {
-        @extend .has-text-centered;
-
         vertical-align: middle;
 
         button.button.is-inverted {
             background-color: transparent;
+        }
+    }
+
+    &.table.centered {
+        @extend .table;
+
+        td {
+            @extend .has-text-centered;
         }
     }
 }
@@ -24,4 +35,9 @@ table {
 figure.image img {
     height: 100%;
     object-fit: cover;
+}
+
+.card-header:not(.is-active) {
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
 }
