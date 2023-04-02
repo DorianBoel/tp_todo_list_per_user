@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of users | async">
             <td class="is-flex is-justify-content-center">
                 <figure class="image is-48x48">
                     <img class="is-rounded" [src]="getImg(user)" alt="Placeholder image">
@@ -19,11 +19,11 @@
             </td>
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
-            <td>3</td>
+            <td>{{ (getUserTasks(user) | async)?.length }}</td>
             <td>
-                <button class="button is-small is-inverted is-info">
-                    <a [routerLink]="'view/' + user.id!">Voir</a>
-                </button>
+                <a [routerLink]="'view/' + user.id!" class="button is-small is-inverted is-info">
+                    Voir
+                </a>
             </td>
         </tr>
     </tbody>

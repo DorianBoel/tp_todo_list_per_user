@@ -11,22 +11,22 @@ export class UserService {
 
     private baseUrl = `${environment.API_URL}/users`;
 
-    private users$ = new BehaviorSubject<User[]>([]);
+    public users$ = new BehaviorSubject<User[]>([]);
 
     public readonly defautImgUrl = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
 
     constructor(private http: HttpClient) {
-        this.fetchTasks();
+        this.fetchUsers();
     }
 
-    private fetchTasks() {
+    private fetchUsers() {
         this.http
             .get<User[]>(this.baseUrl)
             .subscribe((data) => this.users$.next(data));
     }
 
-    getSubscription(callback: (value: User[]) => void) {
-        return this.users$.subscribe(callback);
+    getUsers() {
+        return this.users$.asObservable();
     }
 
     findById(id: number) {

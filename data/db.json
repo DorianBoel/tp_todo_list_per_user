@@ -17,5 +17,39 @@
             "email": "araki@stando.com",
             "imgUrl": "https://static.wikia.nocookie.net/ca83d96f-f71a-4d62-8b54-0fe2a4ac2527/scale-to-width/370"
         }
+    ],
+    "tasks": [
+        {
+            "id": 1,
+            "name": "Task 1",
+            "categoryId": 1,
+            "userId": 1,
+            "completed": true
+        },
+        {
+            "id": 2,
+            "name": "Task 2",
+            "categoryId": 4,
+            "userId": 1,
+            "completed": false
+        }
+    ],
+    "taskCategories": [
+        {
+            "id": 1,
+            "label": "Développement"
+        },
+        {
+            "id": 2,
+            "label": "Testing"
+        },
+        {
+            "id": 3,
+            "label": "Déploiement"
+        },
+        {
+            "id": 4,
+            "label": "Maintenance"
+        }
     ]
 }

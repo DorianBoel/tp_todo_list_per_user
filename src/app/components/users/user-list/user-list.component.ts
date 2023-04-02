@@ -1,28 +1,26 @@
 import { Component, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Observable, Subscription, map } from "rxjs";
 import { User } from "src/app/shared/models/user";
+import { TaskService } from "src/app/shared/services/task.service";
 import { UserService } from "src/app/shared/services/user.service";
 
 @Component({
     selector: "app-user-list",
     templateUrl: "user-list.template.html",
 })
-export class UserListComponent implements OnDestroy {
+export class UserListComponent {
 
-    private subscription: Subscription;
+    users = this.userService.getUsers();
 
-    users: User[] = [];
-
-    constructor(private userService: UserService) {
-        this.subscription = this.userService.getSubscription((users) => this.users = users);
-    }
+    constructor(private userService: UserService, private taskService: TaskService) { }
 
     getImg(user: User) {
         return user.imgUrl ?? this.userService.defautImgUrl;
     }
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    };
+    getUserTasks(user: User) {
+        return this.taskService.getUserTasks(user)
+            .pipe(map(tasks => tasks.filter((task) => task.completed === false)));
+    }
 
 }

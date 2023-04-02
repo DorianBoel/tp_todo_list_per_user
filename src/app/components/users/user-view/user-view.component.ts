@@ -3,7 +3,10 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import bulmaCollapsible from '@creativebulma/bulma-collapsible';
+import { Observable, catchError, firstValueFrom, map, mergeMap, of, switchMap, tap } from "rxjs";
+import { Task } from "src/app/shared/models/task";
 import { User } from "src/app/shared/models/user";
+import { TaskService } from "src/app/shared/services/task.service";
 import { UserService } from "src/app/shared/services/user.service";
 
 @Component({
@@ -14,28 +17,47 @@ export class UserViewComponent implements OnInit {
 
     user: User | null = null;
 
-    constructor(private userService: UserService, private router: Router,
-        private route: ActivatedRoute) { }
+    tasks!: Observable<Task[]>;
+
+    constructor(private userService: UserService, private taskService: TaskService,
+        private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit(): void {
-        bulmaCollapsible.attach(".is-collapsible");
-        const id = this.route.snapshot.params["id"];
-        this.userService
-            .findById(id)
+        this.userService.findById(this.route.snapshot.params["id"] as number)
+            .pipe(
+                tap(user => this.user = user)
+            )
             .subscribe({
-                next: (user) => this.user = user,
+                next: (user) => {
+                    this.tasks = this.taskService.getUserTasks(user);
+                },
                 error: (err: Error) => {
+                    console.error(err.message);
                     if (err instanceof HttpErrorResponse && err.status === 404) {
                         this.router.navigate(["/users"]);
                         return;
                     }
                     console.error(err.message);
                 },
+                complete: () => {
+                    const collapsible = bulmaCollapsible.attach(".is-collapsible")[0]
+                    setTimeout(() => collapsible.expand(), 150);
+                }
             });
     }
 
     getImg(user: User) {
         return user.imgUrl ?? this.userService.defautImgUrl;
+    }
+
+    getTaskCategory(id: number) {
+        return this.taskService.findTaskCategoryById(id);
+    }
+
+    filterTasks(completed: boolean) {
+        return this.tasks?.pipe(
+            map((tasks) => tasks.filter((task) => task.completed === completed))
+        );
     }
 
     toggleCollapsible(event: MouseEvent) {

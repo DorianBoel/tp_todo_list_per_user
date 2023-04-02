@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "@creativebulma/bulma-collapsible"
+            ],
             "outputPath": "dist/todo_list_per_user",
             "index": "src/index.html",
             "main": "src/main.ts",

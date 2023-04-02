@@ -5,7 +5,7 @@ interface UserDTO {
     imgUrl?: string,
 }
 
-class User implements Readonly<UserDTO> {
+class User implements UserDTO {
     id?: number | undefined;
     username: string;
     email: string;
