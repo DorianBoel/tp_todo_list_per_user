@@ -8,8 +8,42 @@ $table-cell-text-align: center;
 @import "../node_modules/bulma/bulma.sass";
 @import '@creativebulma/bulma-collapsible';
 
+@mixin collapse-icon($angle: 0deg) {
+
+    fa-icon {
+        transition: transform .15s;
+        transform: rotate($angle);
+    }
+}
+
 .card-footer {
     border-top: none;
+}
+
+.card-header{
+    cursor: pointer;
+
+    :not(.is-active) {
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+}
+
+[data-action="collapse"] {
+
+    &.is-active {
+        @include collapse-icon(90deg);
+    }
+
+    &:not(.is-active) {
+        @include collapse-icon();
+    }
+}
+
+html, body {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
 }
 
 table {
@@ -20,6 +54,11 @@ table {
 
         .button.is-inverted {
             background-color: transparent;
+
+            &:hover {
+                background-color: transparent;
+                color: #3488ce;
+            }
         }
     }
 
@@ -37,7 +76,8 @@ figure.image img {
     object-fit: cover;
 }
 
-.card-header:not(.is-active) {
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
+footer.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%
 }

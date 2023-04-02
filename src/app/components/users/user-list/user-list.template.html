@@ -21,8 +21,8 @@
             <td>{{ user.email }}</td>
             <td>{{ (getUserTasks(user) | async)?.length }}</td>
             <td>
-                <a [routerLink]="'view/' + user.id!" class="button is-small is-inverted is-info">
-                    Voir
+                <a [routerLink]="'view/' + user.id!" class="button is-small is-info">
+                    <fa-icon icon="list"></fa-icon>
                 </a>
             </td>
         </tr>

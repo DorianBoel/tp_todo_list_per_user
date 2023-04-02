@@ -21,14 +21,10 @@
             <span class="is-size-5 has-text-weight-bold">Liste des tâches</span>
             <hr class="my-3">
             <div class="card block has-background-info-light">
-                <header class="card-header">
+                <header class="card-header" href="#tasksToComplete" (click)="toggleCollapsible($event)" data-action="collapse">
                     <span class="card-header-title has-text-weight-semibold">En cours</span>
                     <button class="card-header-icon">
-                        <span class="icon">
-                            <a href="#tasksToComplete" (click)="toggleCollapsible($event)" data-action="collapse">
-                                v
-                            </a>
-                        </span>
+                        <fa-icon class="has-text-info" icon="angle-right"></fa-icon>
                     </button>
                 </header>
                 <div id="tasksToComplete" class="is-collapsible">
@@ -37,26 +33,26 @@
                             <tbody>
                                 <tr *ngFor="let task of filterTasks(false) | async">
                                     <td>{{ task.name }}</td>
-                                    <td class="is-italic" style="width: 40%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
-                                    <td style="width: 20%">
-                                        <button class="button button is-inverted is-info">Edit</button>
+                                    <td class="is-italic" style="width: 45%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
+                                    <td style="width: 10%">
+                                        <a class="button is-inverted is-info">
+                                            <fa-icon icon="pen-to-square"></fa-icon>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="py-3 has-text-centered is-italic " *ngIf="(filterTasks(false) | async)?.length! === 0">
+                        <p class="py-3 has-text-centered is-italic" *ngIf="(filterTasks(false) | async)?.length! === 0">
                             Aucune tâche
                         </p>
                     </div>
                 </div>
             </div>
             <div class="card has-background-success-light">
-                <header class="card-header">
+                <header class="card-header" href="#tasksCompleted" (click)="toggleCollapsible($event)" data-action="collapse">
                     <span class="card-header-title has-text-weight-semibold">Terminées</span>
                     <button class="card-header-icon">
-                        <a href="#tasksCompleted" (click)="toggleCollapsible($event)" data-action="collapse">
-                            v
-                        </a>
+                        <fa-icon class="has-text-info" icon="angle-right"></fa-icon>
                     </button>
                 </header>
                 <div id="tasksCompleted" class="is-collapsible">
@@ -65,9 +61,11 @@
                             <tbody>
                                 <tr *ngFor="let task of filterTasks(true) | async">
                                     <td>{{ task.name }}</td>
-                                    <td class="is-italic" style="width: 40%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
-                                    <td style="width: 20%">
-                                        <button class="button button is-inverted is-info">Edit</button>
+                                    <td class="is-italic" style="width: 45%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
+                                    <td style="width: 10%">
+                                        <button class="button is-inverted is-info">
+                                            <fa-icon icon="pen-to-square"></fa-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
