@@ -1,9 +1,10 @@
 
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import bulmaCollapsible from '@creativebulma/bulma-collapsible';
-import { Observable, catchError, firstValueFrom, map, mergeMap, of, switchMap, tap } from "rxjs";
+import { Observable, map, tap } from "rxjs";
+
 import { Task } from "src/app/shared/models/task";
 import { User } from "src/app/shared/models/user";
 import { TaskService } from "src/app/shared/services/task.service";
@@ -40,7 +41,7 @@ export class UserViewComponent implements OnInit {
                     console.error(err.message);
                 },
                 complete: () => {
-                    const collapsible = bulmaCollapsible.attach(".is-collapsible")[0]
+                    const collapsible = bulmaCollapsible.attach(".is-collapsible")[0];
                     setTimeout(() => collapsible.expand(), 150);
                 }
             });

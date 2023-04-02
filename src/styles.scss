@@ -9,10 +9,25 @@ $table-cell-text-align: center;
 @import '@creativebulma/bulma-collapsible';
 
 @mixin collapse-icon($angle: 0deg) {
-
     fa-icon {
         transition: transform .15s;
         transform: rotate($angle);
+    }
+}
+
+.is-flex-desktop {
+    @extend .is-flex;
+
+    @include until($tablet) {
+        display: initial !important;
+    }
+}
+
+.mt-6-desktop {
+    @extend .mt-6;
+
+    @include until($tablet) {
+        margin-top: 0 !important;
     }
 }
 

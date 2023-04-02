@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from "@angular/core";
-import { Observable, Subscription, map } from "rxjs";
+import { Component } from "@angular/core";
+import { map } from "rxjs";
+
 import { User } from "src/app/shared/models/user";
 import { TaskService } from "src/app/shared/services/task.service";
 import { UserService } from "src/app/shared/services/user.service";

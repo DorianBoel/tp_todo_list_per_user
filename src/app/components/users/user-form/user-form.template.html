@@ -1,0 +1,64 @@
+<h1 class="is-size-3 has-text-centered mb-5">Enregistrement d'un nouvel utilisateur</h1>
+
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label" for="name">Nom</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control is-expanded">
+                    <input id="name" class="input" [ngClass]="{'is-danger': showFormFeedback('name')}" formControlName="name" type="text" placeholder="Nom de l'utilisateur" required>
+                </div>
+                <p *ngIf="showFormFeedback('name') && getFormControl('name').errors?.required" class="help is-danger">
+                    Nom d'utilisateur requis
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="field is-horizontal mt-6-desktop">
+        <div class="field-label is-normal">
+            <label class="label" for="email">E-mail</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input id="email" class="input" [ngClass]="{'is-danger': showFormFeedback('email')}" formControlName="email" type="email" placeholder="Adresse mail de l'utilisateur" required>
+                </div>
+                <div *ngIf="showFormFeedback('email')">
+                    <p *ngIf="getFormControl('email').errors?.required" class="help is-danger">
+                        Adresse mail requise
+                    </p>
+                    <p *ngIf="getFormControl('email').errors?.email" class="help is-danger">
+                        Adresse mail invalide
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field is-horizontal">
+        <div class="field-label is-normal is-flex-desktop is-justify-content-end">
+            <label class="label is-align-self-center mb-2" for="profileImg">Photo de profil</label>
+        </div>
+        <div class="field-body">
+            <div class="field is-flex is-align-items-center">
+                <div class="control is-flex is-align-items-center is-flex-grow-1">
+                    <input id="profileImg" class="input" (blur)="updatePreview()" formControlName="profileImg" type="text" placeholder="Lien vers la photo de profil de l'utilisateur">
+                </div>
+            </div>
+            <div class="field is-flex is-justify-content-center">
+                <div class="control">
+                    <figure class="image is-128x128">
+                        <img class="is-rounded" [src]="previewSrc" (error)="previewFallback($event)" alt="Placeholder image">
+                    </figure>
+                    <p class="has-text-centered is-size-7 has-text-grey">Aperçu</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field is-grouped is-grouped-right mt-6-desktop">
+        <div class="control">
+            <input class="button is-link" type="submit" value="Valider">
+        </div>
+    </div>
+</form>

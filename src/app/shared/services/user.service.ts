@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, tap } from "rxjs";
+
 import { environment } from "../../env";
 import { User } from "../models/user";
 
@@ -32,6 +33,15 @@ export class UserService {
     findById(id: number) {
         return this.http
             .get<User>(`${this.baseUrl}/${id}`);
+    }
+
+    addUser(user: User) {
+        console.log(user);
+        return this.http
+            .post<User>(this.baseUrl, user)
+            .pipe(
+                tap(() => this.fetchUsers()),
+            );
     }
 
 }

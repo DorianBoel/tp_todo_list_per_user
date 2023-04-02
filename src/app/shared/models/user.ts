@@ -15,6 +15,7 @@ class User implements UserDTO {
         this.id = dto.id;
         this.username = dto.username;
         this.email = dto.email;
+        this.imgUrl = dto.imgUrl;
     }
 }
 
