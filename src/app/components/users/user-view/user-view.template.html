@@ -13,6 +13,11 @@
                     <p class="is-size-4">{{ user.username }}</p>
                     <p class="is-size-6">{{ user.email }}</p>
                 </div>
+                <div class="column is-narrow">
+                    <a class="has-text-info" [routerLink]="'/users/edit/' + user.id">
+                        <fa-icon icon="pen-to-square"></fa-icon>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

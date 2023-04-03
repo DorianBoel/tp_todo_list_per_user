@@ -1,6 +1,7 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { User } from "src/app/shared/models/user";
 import { UserService } from "src/app/shared/services/user.service";
@@ -11,24 +12,44 @@ import { UserService } from "src/app/shared/services/user.service";
 })
 export class UserFormComponent {
 
-    users = this.userService.getUsers();
+    title: string = "Enregistrement d'un nouvel utilisateur";
+
+    user?: User;
 
     formGroup!: FormGroup;
 
     previewSrc: string = "";
 
     constructor(private userService: UserService, private formBuilder: FormBuilder,
-        private router: Router) {
-        this.formGroup = this.formBuilder.group({
-            name: ["", Validators.required],
-            email: ["", [Validators.required, Validators.email]],
-            profileImg: [],
-        });
-        this.updatePreview();
+        private router: Router, private route: ActivatedRoute) {
+        if (this.route.snapshot.params.id) {
+            this.title = "Modification du profil utilisateur";
+            this.userService.findById(this.route.snapshot.params.id as number)
+                .subscribe({
+                    next: (user) => {
+                        this.user = user;
+                        this.initForm();
+                    },
+                    error: (err: Error) => {
+                        if (err instanceof HttpErrorResponse && err.status === 404) {
+                            this.router.navigate(["/users/add"]);
+                            return;
+                        }
+                        console.error(err.message);
+                    },
+                });
+        } else {
+            this.initForm();
+        }
     }
 
-    getImg(user: User) {
-        return user.imgUrl ?? this.userService.defautImgUrl;
+    private initForm() {
+        this.formGroup = this.formBuilder.group({
+            name: [this.user?.username ?? "", Validators.required],
+            email: [this.user?.email ?? "", [Validators.required, Validators.email]],
+            profileImg: [this.user?.imgUrl ?? ""],
+        });
+        this.updatePreview();
     }
 
     getFormControl(controlName: string): AbstractControl {
@@ -38,10 +59,6 @@ export class UserFormComponent {
     showFormFeedback(controlName: string) {
         const control = this.getFormControl(controlName);
         return control.invalid && (control.dirty || control.touched);
-    }
-
-    getImgPreview() {
-        return this.getFormControl('profileImg').value?.trim() || this.userService.defautImgUrl;
     }
 
     updatePreview() {
@@ -56,7 +73,9 @@ export class UserFormComponent {
         if (!this.formGroup.valid) {
             return this.formGroup.markAllAsTouched();
         }
-        this.userService.addUser(new User({
+        const request = (user: User) => this.user ? this.userService.updateUser(user) : this.userService.addUser(user);
+        request(new User({
+            id: this.user?.id,
             username: this.getFormControl("name").value.trim(),
             email: this.getFormControl("email").value.trim(),
             imgUrl: this.getFormControl("profileImg").value.trim() || undefined,

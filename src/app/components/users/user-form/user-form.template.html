@@ -1,6 +1,6 @@
-<h1 class="is-size-3 has-text-centered mb-5">Enregistrement d'un nouvel utilisateur</h1>
+<h1 class="is-size-3 has-text-centered mb-5">{{ title }}</h1>
 
-<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+<form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="submitForm()">
     <div class="field is-horizontal">
         <div class="field-label is-normal">
             <label class="label" for="name">Nom</label>

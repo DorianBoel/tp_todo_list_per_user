@@ -36,9 +36,16 @@ export class UserService {
     }
 
     addUser(user: User) {
-        console.log(user);
         return this.http
             .post<User>(this.baseUrl, user)
+            .pipe(
+                tap(() => this.fetchUsers()),
+            );
+    }
+
+    updateUser(user: User) {
+        return this.http
+            .put<User>(`${this.baseUrl}/${user.id}`, user)
             .pipe(
                 tap(() => this.fetchUsers()),
             );

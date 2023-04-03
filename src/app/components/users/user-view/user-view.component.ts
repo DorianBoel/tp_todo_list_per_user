@@ -33,7 +33,6 @@ export class UserViewComponent implements OnInit {
                     this.tasks = this.taskService.getUserTasks(user);
                 },
                 error: (err: Error) => {
-                    console.error(err.message);
                     if (err instanceof HttpErrorResponse && err.status === 404) {
                         this.router.navigate(["/users"]);
                         return;

@@ -18,6 +18,10 @@ const routes: Routes = [
         path: "add",
         component: UserFormComponent,
     },
+    {
+        path: "edit/:id",
+        component: UserFormComponent,
+    },
 ];
 
 @NgModule({
