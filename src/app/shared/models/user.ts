@@ -1,8 +1,8 @@
 interface UserDTO {
-    id?: number,
-    username: string,
-    email: string,
-    imgUrl?: string,
+    id?: number;
+    username: string;
+    email: string;
+    imgUrl?: string;
 }
 
 class User implements UserDTO {

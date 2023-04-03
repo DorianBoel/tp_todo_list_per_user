@@ -8,6 +8,12 @@ const routes: Routes = [
         redirectTo: "users",
     },
     {
+        path: "tasks",
+        loadChildren: () =>
+            import("./components/tasks/tasks.module")
+                .then((mod) => mod.TasksModule),
+    },
+    {
         path: "users",
         loadChildren: () =>
             import("./components/users/users.module")

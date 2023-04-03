@@ -3,6 +3,7 @@ import { Component } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
+import { FormComponentInterface } from "src/app/shared/models/formComponentInterface";
 import { User } from "src/app/shared/models/user";
 import { UserService } from "src/app/shared/services/user.service";
 
@@ -10,7 +11,7 @@ import { UserService } from "src/app/shared/services/user.service";
     selector: "app-user-form",
     templateUrl: "user-form.template.html",
 })
-export class UserFormComponent {
+export class UserFormComponent implements FormComponentInterface {
 
     title: string = "Enregistrement d'un nouvel utilisateur";
 

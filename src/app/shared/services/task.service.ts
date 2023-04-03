@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, map, tap } from "rxjs";
+
 import { environment } from "src/app/env";
 import { Task } from "../models/task";
 import { TaskCategory } from "../models/taskCategory";
-import { BehaviorSubject, filter, from, map } from "rxjs";
-import { HttpClient } from "@angular/common/http";
 import { User } from "../models/user";
 
 @Injectable({
@@ -36,6 +37,15 @@ export class TaskService {
             .subscribe((data) => this.taskCategories$.next(data));
     }
 
+    getTaskCategories() {
+        return this.taskCategories$.asObservable();
+    }
+
+    findById(id: number) {
+        return this.http
+            .get<Task>(`${this.baseUrl.tasks}/${id}`);
+    }
+
     findTaskCategoryById(id: number) {
         return this.taskCategories$
             .pipe(
@@ -47,6 +57,22 @@ export class TaskService {
         return this.tasks$.pipe(
             map(tasks => tasks.filter((task) => task.userId === user.id))
         );
+    }
+
+    addTask(task: Task) {
+        return this.http
+            .post<Task>(this.baseUrl.tasks, task)
+            .pipe(
+                tap(() => this.fetchTasks()),
+            );
+    }
+
+    updateTask(task: Task) {
+        return this.http
+            .put<Task>(`${this.baseUrl.tasks}/${task.id}`, task)
+            .pipe(
+                tap(() => this.fetchTasks()),
+            );
     }
 
 }

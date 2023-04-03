@@ -40,7 +40,7 @@
                                     <td>{{ task.name }}</td>
                                     <td class="is-italic" style="width: 45%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
                                     <td style="width: 10%">
-                                        <a class="button is-inverted is-info">
+                                        <a class="has-text-info" [routerLink]="'/tasks/edit/' + task.id">
                                             <fa-icon icon="pen-to-square"></fa-icon>
                                         </a>
                                     </td>
@@ -68,9 +68,9 @@
                                     <td>{{ task.name }}</td>
                                     <td class="is-italic" style="width: 45%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
                                     <td style="width: 10%">
-                                        <button class="button is-inverted is-info">
+                                        <a class="has-text-info" [routerLink]="'/tasks/edit/' + task.id">
                                             <fa-icon icon="pen-to-square"></fa-icon>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -66,15 +66,6 @@ table {
 
     &.table td {
         vertical-align: middle;
-
-        .button.is-inverted {
-            background-color: transparent;
-
-            &:hover {
-                background-color: transparent;
-                color: #3488ce;
-            }
-        }
     }
 
     &.table.centered {
