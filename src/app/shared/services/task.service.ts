@@ -75,4 +75,12 @@ export class TaskService {
             );
     }
 
+    deleteTask(id: number) {
+        return this.http
+            .delete<Task>(`${this.baseUrl.tasks}/${id}`)
+            .pipe(
+                tap(() => this.fetchTasks()),
+            );
+    }
+
 }

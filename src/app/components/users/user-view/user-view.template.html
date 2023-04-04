@@ -25,6 +25,19 @@
         <div class="block">
             <span class="is-size-5 has-text-weight-bold">Liste des tâches</span>
             <hr class="my-3">
+            <div class="level is-mobile">
+                <div class="level-left is-align-items-baseline">
+                    <div class="field-label is-small is-flex-grow-0 mr-5 pt-0">
+                        <label class="label">Filtrer</label>
+                    </div>
+                    <div class="select is-small">
+                        <select [(ngModel)]="filterCategory">
+                            <option [ngValue]="null">Toutes les catégories</option>
+                            <option *ngFor="let category of categories | async" [ngValue]="category">{{ category.label }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="card block has-background-info-light">
                 <header class="card-header" href="#tasksToComplete" (click)="toggleCollapsible($event)" data-action="collapse">
                     <span class="card-header-title has-text-weight-semibold">En cours</span>
@@ -40,14 +53,35 @@
                                     <td>{{ task.name }}</td>
                                     <td class="is-italic" style="width: 45%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
                                     <td style="width: 10%">
-                                        <a class="has-text-info" [routerLink]="'/tasks/edit/' + task.id">
-                                            <fa-icon icon="pen-to-square"></fa-icon>
-                                        </a>
+                                        <div class="level is-mobile">
+                                            <a class="level-item has-text-info mr-2" [routerLink]="'/tasks/edit/' + task.id">
+                                                <fa-icon icon="pen-to-square"></fa-icon>
+                                            </a>
+                                            <a class="level-item has-text-danger js-modal-trigger" [attr.data-target]="'confirmDelete' + task.id">
+                                                <fa-icon icon="trash"></fa-icon>
+                                            </a>
+                                        </div>
                                     </td>
+                                    <div [id]="'confirmDelete' + task.id" class="modal">
+                                        <div class="modal-background"></div>
+                                        <div class="modal-card">
+                                            <header class="modal-card-head">
+                                                <p class="modal-card-title">Suppression d'une tâche</p>
+                                                <button class="delete" aria-label="close"></button>
+                                            </header>
+                                            <section class="modal-card-body">
+                                                Voulez-vous vraiment supprimer cette tâche ?
+                                            </section>
+                                            <footer class="modal-card-foot is-justify-content-end">
+                                                <button class="button" aria-label="close">Annuler</button>
+                                                <button class="button is-danger" aria-label="close" (click)="deleteTask(task.id!)">Supprimer</button>
+                                            </footer>
+                                        </div>
+                                    </div>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="py-3 has-text-centered is-italic" *ngIf="(filterTasks(false) | async)?.length! === 0">
+                        <p class="py-2 has-text-centered is-italic" *ngIf="(filterTasks(false) | async)?.length! === 0">
                             Aucune tâche
                         </p>
                     </div>
@@ -68,14 +102,35 @@
                                     <td>{{ task.name }}</td>
                                     <td class="is-italic" style="width: 45%">{{ (getTaskCategory(task.categoryId) | async)?.label }}</td>
                                     <td style="width: 10%">
-                                        <a class="has-text-info" [routerLink]="'/tasks/edit/' + task.id">
-                                            <fa-icon icon="pen-to-square"></fa-icon>
-                                        </a>
+                                        <div class="level is-mobile">
+                                            <a class="level-item has-text-info mr-2" [routerLink]="'/tasks/edit/' + task.id">
+                                                <fa-icon icon="pen-to-square"></fa-icon>
+                                            </a>
+                                            <a class="level-item has-text-danger js-modal-trigger" [attr.data-target]="'confirmDelete' + task.id">
+                                                <fa-icon icon="trash"></fa-icon>
+                                            </a>
+                                        </div>
                                     </td>
+                                    <div [id]="'confirmDelete' + task.id" class="modal">
+                                        <div class="modal-background"></div>
+                                        <div class="modal-card">
+                                            <header class="modal-card-head">
+                                                <p class="modal-card-title">Suppression d'une tâche</p>
+                                                <button class="delete" aria-label="close"></button>
+                                            </header>
+                                            <section class="modal-card-body">
+                                                Voulez-vous vraiment supprimer cette tâche ?
+                                            </section>
+                                            <footer class="modal-card-foot is-justify-content-end">
+                                                <button class="button" aria-label="close">Annuler</button>
+                                                <button class="button is-danger" aria-label="close" (click)="deleteTask(task.id!)">Supprimer</button>
+                                            </footer>
+                                        </div>
+                                    </div>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="py-3 has-text-centered is-italic" *ngIf="(filterTasks(true) | async)?.length! === 0">
+                        <p class="py-2 has-text-centered is-italic" *ngIf="(filterTasks(true) | async)?.length! === 0">
                             Aucune tâche
                         </p>
                     </div>

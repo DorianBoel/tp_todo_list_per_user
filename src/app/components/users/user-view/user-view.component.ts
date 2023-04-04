@@ -3,9 +3,10 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import bulmaCollapsible from '@creativebulma/bulma-collapsible';
-import { Observable, map, tap } from "rxjs";
+import { BehaviorSubject, Observable, map, tap } from "rxjs";
 
 import { Task } from "src/app/shared/models/task";
+import { TaskCategory } from "src/app/shared/models/taskCategory";
 import { User } from "src/app/shared/models/user";
 import { TaskService } from "src/app/shared/services/task.service";
 import { UserService } from "src/app/shared/services/user.service";
@@ -19,6 +20,10 @@ export class UserViewComponent implements OnInit {
     user: User | null = null;
 
     tasks!: Observable<Task[]>;
+
+    categories: Observable<TaskCategory[]> = this.taskService.getTaskCategories();
+
+    filterCategory: TaskCategory | null = null;
 
     constructor(private userService: UserService, private taskService: TaskService,
         private router: Router, private route: ActivatedRoute) { }
@@ -42,8 +47,13 @@ export class UserViewComponent implements OnInit {
                 complete: () => {
                     const collapsible = bulmaCollapsible.attach(".is-collapsible")[0];
                     setTimeout(() => collapsible.expand(), 150);
+                    this.loadModals();
                 }
             });
+    }
+
+    private loadModals() {
+        document.dispatchEvent(new Event("loadModals"));
     }
 
     getImg(user: User) {
@@ -55,9 +65,15 @@ export class UserViewComponent implements OnInit {
     }
 
     filterTasks(completed: boolean) {
+        let predicate = (task: Task) => (task.completed === completed) && (this.filterCategory ? task.categoryId === this.filterCategory?.id : true);
         return this.tasks?.pipe(
-            map((tasks) => tasks.filter((task) => task.completed === completed))
+            map((tasks) => tasks.filter(predicate)),
         );
+    }
+
+    deleteTask(id: number) {
+        this.taskService.deleteTask(id)
+            .subscribe(() => this.loadModals());
     }
 
     toggleCollapsible(event: MouseEvent) {
